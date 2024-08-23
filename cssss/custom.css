@@ -1,0 +1,87 @@
+.navbar-brand{
+    font-family: "ubuntu", sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* make header image responsive */
+
+.navbar{
+    background: rgb(103, 174, 188);
+}
+
+.back-image{
+    background-size: cover;
+    background-size: center center ;
+    background-repeat: no-repeat;
+    min-height: 90vh;
+    border-radius: 0px;
+}
+   
+.test-uppercase{
+    color: rgb(72, 177, 209);
+    
+}
+
+.info{
+    margin-top: 50px;
+}
+
+/* myclass */
+@media only screen and(max-width: 600px){
+.myclass{
+    margin-top: 350px;
+    text-align: center;
+}
+}
+
+
+/* .container-fuild{
+   
+    border: 3px solid rgb(130, 130, 206) ;
+    width: 100% !important;
+    margin: 20px;
+} */
+
+/* .row{
+display: flex;
+
+} */
+
+/* .card{
+    width: 300px;
+} */
+
+@media only screen and(max-width: 600px){
+      .card{
+        margin-top: 350px;
+        text-align: center;
+    
+        }  
+        
+    }
+
+.fi-color{
+    color: rgb(226, 220, 232);
+}
+
+.fi-color:hover{
+    color: black;
+}
+
+a{
+    color: black;
+}
+
+.active{
+    color: aqua;
+    background-color: rgb(43, 156, 226);
+}
+
+a:hover{
+    color: rgb(0, 200, 255);
+}
+
+
+
+  

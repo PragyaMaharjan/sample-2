@@ -1,0 +1,441 @@
+<!--start container  -->
+
+<div class="container-fuildd" style="margin-top:40px";>
+    <div class="row">  
+        <!-- start row -->
+        <nav class="col-sm-2 bg-light sidebar py-5"><!-- side bar -->
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link 
+                    <?php if(PAGE == 'dashboard'){echo 'active';}?>" href="dashboard.php">
+                        <i class="fas fa-tachometer-alt"></i> dashboard
+                     </a></li>
+
+                     <li class="nav-item">
+                    <a class="nav-link <?php if(PAGE == 'work'){echo 'active';}?>" href="work.php">
+                        <i class="fab fa-accessible-icon"></i> Work Order
+                     </a></li>
+
+                     <li class="nav-item">
+                    <a class="nav-link <?php if(PAGE == 'request'){echo 'active';}?>" href="request.php">
+                    <i class="fa-solid fa-align-center"></i>
+                         Requests</a></li>
+
+                         <li class="nav-item">
+                    <a class="nav-link <?php if(PAGE == 'assets'){echo 'active';}?>" href="assets.php">
+                        <i class="fab fa-accessible-icon"></i> Assets
+                     </a></li>
+
+                     <li class="nav-item">
+                    <a class="nav-link <?php if(PAGE == 'technician'){echo 'active';}?>" href="technician.php">
+                        <i class="fab fa-accessible-icon"></i> Technician
+                     </a></li>
+
+                     <li class="nav-item">
+                    <a class="nav-link <?php if(PAGE == 'sellreport'){echo 'active';}?>" href="soldproductreport.php">
+                        <i class="fab fa-accessible-icon"></i> Sell Report
+                     </a></li>
+
+                     <li class="nav-item">
+                    <a class="nav-link <?php if(PAGE == 'workreport'){echo 'active';}?>" href="workreport.php">
+                        <i class="fab fa-accessible-icon"></i> Work Report
+                     </a></li>
+                     
+                        <li class="nav-item">
+                    <a class="nav-link <?php if(PAGE == 'changepass'){echo 'active';}?>" href="changepass.php">
+                        <i class="fas fa-key">
+                        </i> Change password</a></li>
+
+                        <li class="nav-item">
+                    <a class="nav-link" href="logout.php">
+                        <i class="fas fa-sign-out-alt">
+                        </i> Logout</a></li>
+                        
+            </ul>
+            </div>
+        </nav><!-- end side bar 1st col -->
+
+
+
+
+        <div class="container-fuildd" style="margin-top:40px";>
+            <div class="row">  
+                <!-- start row -->
+                <nav class="col-sm-2 bg-light sidebar py-5"><!-- side bar -->
+                  <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link"  href="dashboard.php">
+                                <i class="fas fa-tachometer-alt"></i> dashboard
+                             </a></li>
+        
+                             <li class="nav-item">
+                            <a class="nav-link" href="work.php">
+                                <i class="fab fa-accessible-icon"></i> Work Order
+                             </a></li>
+        
+                             <li class="nav-item">
+                            <a class="nav-link"  href="request.php">
+                            <i class="fa-solid fa-align-center"></i>
+                                 Requests</a></li>
+        
+                                 <li class="nav-item">
+                            <a class="nav-link" href="assets.php">
+                                <i class="fab fa-accessible-icon"></i> Assets
+                             </a></li>
+        
+                             <li class="nav-item">
+                            <a class="nav-link" href="technician.php">
+                                <i class="fab fa-accessible-icon"></i> Technician
+                             </a></li>
+        
+                             <li class="nav-item">
+                            <a class="nav-link" href="soldproductreport.php">
+                                <i class="fab fa-accessible-icon"></i> Sell Report
+                             </a></li>
+        
+                             <li class="nav-item">
+                            <a class="nav-link" href="workreport.php">
+                                <i class="fab fa-accessible-icon"></i> Work Report
+                             </a></li>
+                             
+                                <li class="nav-item">
+                            <a class="nav-link" href="changepass.php">
+                                <i class="fas fa-key">
+                                </i> Change password</a></li>
+        
+                                <li class="nav-item">
+                            <a class="nav-link" href="logout.php">
+                                <i class="fas fa-sign-out-alt">
+                                </i> Logout</a></li>
+                                
+                    </ul>
+                    </div>
+                </nav><!-- end side bar 1st col -->
+
+
+
+
+
+                <?php
+define('TITLE', 'Check Status');
+define('PAGE', 'checkstatus');
+include('includes/header.php');
+include('dbconnection.php');
+
+session_start();
+if (!isset($_SESSION['is_login']) || !$_SESSION['is_login']) {
+    echo "<script> location.href='loginrequest.php'; </script>";
+    exit;
+}
+
+$rEmail = $_SESSION['rEmail'];
+?>
+<!-- start second column -->
+
+<div class="col-sm-6 mt-5 mx-3 ">
+    <form action="" method="POST" class="form-inline">
+        <div class="form-group mr-3 d-print-none">
+            <label for="checkid">Enter Request ID:</label>
+            <input type="text" class="form-control" name="checkid" id="checkid" onkeypress="isInputNumber(event)">
+        </div>
+        <button type="submit" class="btn btn-info d-print-none">Search</button>
+    </form>
+
+    <?php
+    if (isset($_POST['checkid'])) {
+        $checkid = $_POST['checkid'];
+
+        if (empty($checkid)) {
+            $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2">All fields are required</div>';
+        } else {
+            $checkid = intval($checkid); // Ensure the ID is an integer
+
+            // Use prepared statements to prevent SQL injection
+            $stmt = $conn->prepare("SELECT * FROM assignwork_tb WHERE request_id = ?");
+            $stmt->bind_param('i', $checkid);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+
+            // Check if $row is not null before accessing its elements
+            if ($row && $row['request_id'] == $checkid) {
+                ?>
+                <h3 class="text-center mt-5">Assigned Work Details</h3>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr><td>Request ID</td><td><?php echo htmlspecialchars($row['request_id']); ?></td></tr>
+                        <tr><td>Request Info</td><td><?php echo htmlspecialchars($row['request_info']); ?></td></tr>
+                        <tr><td>Request Description</td><td><?php echo htmlspecialchars($row['request_desc']); ?></td></tr>
+                        <tr><td>Requester Name</td><td><?php echo htmlspecialchars($row['requester_name']); ?></td></tr>
+                        <tr><td>Requester Address1</td><td><?php echo htmlspecialchars($row['requester_add1']); ?></td></tr>
+                        <tr><td>Requester Address2</td><td><?php echo htmlspecialchars($row['requester_add2']); ?></td></tr>
+                        <tr><td>Requester City</td><td><?php echo htmlspecialchars($row['requester_city']); ?></td></tr>
+                        <tr><td>Requester State</td><td><?php echo htmlspecialchars($row['requester_state']); ?></td></tr>
+                        <tr><td>Requester Zip</td><td><?php echo htmlspecialchars($row['requester_zip']); ?></td></tr>
+                        <tr><td>Requester Email</td><td><?php echo htmlspecialchars($row['requester_email']); ?></td></tr>
+                        <tr><td>Requester Mobile</td><td><?php echo htmlspecialchars($row['requester_mobile']); ?></td></tr>
+                        <tr><td>Requester Technician</td><td><?php echo htmlspecialchars($row['requester_tech']); ?></td></tr>
+                        <tr><td>Assign Date</td><td><?php echo htmlspecialchars($row['assign_date']); ?></td></tr>
+                        <tr><td>Customer Sign</td><td></td></tr>
+                        <tr><td>Technician Sign</td><td></td></tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                <form action="">
+                <input class="btn btn-info d-print-none" type="button" value="Print"  onclick="window.print();">
+                <input class="btn btn-secondary d-print-none" type="button" value="Close"  onclick="window.history.back();">
+                </form>
+                </div>
+                <?php
+            } else {
+                echo '<div class="alert alert-warning mt-4">Your Request is Still Pending</div>';
+            }
+
+            $stmt->close();
+        }
+
+        if (isset($msg)) {
+            echo $msg;
+        }
+    }
+    ?>
+
+</div>
+<!-- end second column -->
+<script>
+function isInputNumber(evt) { 
+    var ch = String.fromCharCode(evt.which); 
+    if (!(/[0-9]/.test(ch))) { evt.preventDefault(); } 
+}
+</script>
+<?php
+include('includes/footer.php');
+?>
+
+<!-- ediemp -->
+<?php
+define('TITLE','Update Technician');
+define('PAGE','technician');
+include('./includes/header.php');
+include('../requester/dbconnection.php');
+session_start();
+
+if (!isset($_SESSION['is_adminlogin'])) {
+    // If session is not set or user is not logged in, redirect to login page
+    header('Location: login.php');
+    exit(); // Make sure to call exit() after a header redirect
+}
+?>
+
+<!-- start 2nd column -->
+<div class="col-sm-6 mt-5 mx-3 jumbotron">
+    <h3 class="text-center">Upadate Requester Details</h3>
+    <?php 
+    if(isset($_POST['edit'])){
+        $sql = "SELECT * FROM technician_tb WHERE empId = {$_POST['id']}";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc(); 
+      
+        }
+        if(isset($_POST['requpdate'])){
+            if(($_POST['empId'] == "") || ($_POST['empCity'] == "")
+            ||($_POST['empEmail'] == "") ){
+                $msg = '<div class="alert alert-primary mt-2"> FILL ALL FILEDS </div>';
+        } else{
+            $rid = $_POST['empId'];
+            $name = $_POST['empCity'];
+            $email = $_POST['empEmail'];
+            $sql = "UPDATE registrationform_tb SET empId = '$rid', empCity='$name', empEmail='$email'
+            WHERE empId = '$rid'";
+            if ($conn->query($sql) == TRUE ){
+                $msg = '<div class="alert alert-success mt-2"> Updated Succesfully </div>';
+            } else{
+                $msg = '<div class="alert alert-danger mt-2"> Unable to update </div>';
+            }
+            }
+        }
+        ?>
+<form action="" method="POST" >
+    <div class="form-group">
+        <label for="empId">Emp ID</label>
+        <input type="text" class="form-control" name="empId" id="empId" value="<?php if(isset($row['empId'])){echo $row['empId'];}?>" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="empCity">Name</label>
+        <input type="text" class="form-control" name="empCity" id="empCity" value="<?php if(isset($row['empCity'])){echo $row['empCity'];}?>" >
+    </div>
+
+    <div class="form-group">
+        <label for="empCity">City</label>
+        <input type="text" class="form-control" name="empCity" id="empCity" value="<?php if(isset($row['empCity'])){echo $row['empCity'];}?>" >
+    </div>
+
+
+    <div class="form-group">
+        <label for="empEmail">Email</label>
+        <input type="email" class="form-control" name="empEmail" id="empEmail" value="<?php if(isset($row['empEmail'])){echo $row['empEmail'];}?>">
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-danger" id="empupdate" name="requpdate">Update</button>
+        <a href="technician.php" class="btn btn-secondary">close</a>
+    </div>
+    
+            </form>
+
+            <?php
+            if(isset($msg))
+            {
+                echo $msg;
+            }
+            ?>
+</div>
+<!-- end second column -->
+
+
+<?php
+include('./includes/footer.php')
+?>
+
+
+style="background-image:url(https://www.tortechnologies.com/wp-content/uploads/2020/12/how-to-choose-a-good-managed-service-provider.jpg)";> 
+
+
+
+
+seelproduct
+
+
+<?php
+define('TITLE','Sell Product');
+define('PAGE','assets');
+include('./includes/header.php');
+include('../requester/dbconnection.php');
+session_start();
+
+if (!isset($_SESSION['is_adminlogin'])) {
+    // If session is not set or user is not logged in, redirect to login page
+    header('Location: login.php');
+    exit(); // Make sure to call exit() after a header redirect
+}
+if (isset($_POST['psubmit'])) {
+    // Check if all fields are filled
+    if (empty($_POST['cname']) || empty($_POST['cadd']) || empty($_POST['pname']) ||  
+    empty($_POST['pava']) || empty($_POST['pquantity']) || empty($_POST['psellingcost']) || empty($_POST['stotalcost']) ||
+        empty($_POST['selldate'])) {
+        
+        $msg = '<div class="alert alert-primary mt-2">FILL ALL FIELDS</div>';
+    } else {
+        $pid = $_POST['pid'];
+        $pava = $_POST['pava'] - $_POST['pquantity'];
+
+        $custname = $_POST['cname'];
+        $custadd = $_POST['cadd'];
+        $cpquantity = $_POST['pquantity'];
+        $cpeach = $_POST['psellingcost'];
+        $cptotal = $_POST['totalcost'];
+        $cpdate = $_POST['selldate'];
+      $sql = "INSERT INTO customer_table(custname, custadd, pname, pquantity, sellingcost, totalcost, pqdate)
+       VALUES('$custname', '$custadd','$pname','$pquantity','$psellingcost','$totalcost','$pqdate')";
+       if ($conn->query($sql) === TRUE) {
+        
+       $genid = mysqli_insert_id($conn);
+       session_start();
+       $_SESSION['myid'] = $genid;
+       echo "<script> location.href='sellsucessed.php'</script>";
+    }
+    $sqlup = "UPDATE customer_tb SET pava ='$pava' WHERE pid= '$pid'";
+    $conn->query($sql);
+
+}
+}
+?>
+
+<div class="col-sm-5 mt-5 mx-5 jumbotron">
+    <h3 class="text-center">Customer bill</h3>
+<?php
+if(isset($_POST['issue'])){
+    $sql = "SELECT * FROM assets_tb WHERE pid = {$_POST['id']}";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc(); 
+  
+    }
+?>
+
+    <form action=""  method="POST">
+
+    <div class="form-group">
+            <label for="pid">Product ID </label>
+            <input type="text" class="form-control" name="pid" id="pid" value="<?php  if (isset($row['pid'])) { echo htmlspecialchars($row['pid']); }  ?>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="cname">Customer Name </label>
+            <input type="text" class="form-control" name="cname" id="cname">
+        </div>
+
+        <div class="form-group">
+            <label for="cadd">Customer Address </label>
+            <input type="text" class="form-control" name="cadd" id="cadd" >
+        </div>
+
+    <div class="form-group">
+            <label for="pname">Product Name </label>
+            <input type="text" class="form-control" name="pname" id="pname" value="<?php if (isset($row['pname'])) { echo htmlspecialchars($row['pname']); }?>">
+        </div>
+
+        <div class="form-group">
+            <label for="pava">Available </label>
+            <input type="text" class="form-control" name="pava" id="pava" onkeypress="isInputNumber(event)"  value="<?php if (isset($row['pava'])) { echo htmlspecialchars($row['pava']); } ?>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="pquantity">Quantity </label>
+            <input type="text" class="form-control" name="pquantity" id="pquantity" onkeypress="isInputNumber(event)" >
+        </div>
+
+
+        <div class="form-group">
+            <label for="psellingcost">price Each </label>
+            <input type="text" class="form-control" name="psellingcost" id="psellingcost" onkeypress="isInputNumber(event)" value="<?php if (isset($row['psellingcost'])) { echo htmlspecialchars($row['psellingcost']); } ?>" >
+        </div>
+
+        <div class="form-group">
+            <label for="totalcost">Total Price </label>
+            <input type="text" class="form-control" name="totalcost" id="totalcost" onkeypress="isInputNumber(event)">
+        </div>
+
+        <div class="form-group">
+            <label for="inputDate">Date </label>
+            <input type="date" class="form-control" name="inputDate" id="inputDate" onkeypress="isInputNumber(event)">
+        </div>
+        
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger" id="psubmit" name="psubmit">Submit</button>
+            <a href="assets.php" class="btn btn-secondary">Close</a>
+        </div>
+
+    </form>
+
+    <?php
+    if (!empty($msg)) {
+        echo $msg;
+    }
+    ?>
+</div>
+
+<script>
+function isInputNumber(evt) { 
+    var ch = String.fromCharCode(evt.which); 
+    if (!(/[0-9]/.test(ch))) { evt.preventDefault(); } 
+}
+</script>
+
+
+
+<?php
+include('./includes/footer.php')
+?>
