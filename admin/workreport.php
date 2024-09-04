@@ -11,6 +11,16 @@ if (!isset($_SESSION['is_adminlogin'])) {
     exit(); // Make sure to call exit() after a header redirect
 }
 ?>
+<style>
+    @media print {
+        .sidebar, .d-print-none {
+            display: none !important;
+        }
+        .col-sm-9.col-md-10 {
+            width: 100%;
+        }
+    }
+</style>
 <!-- start second column -->
 
 <div class="col-sm-9 col-md-10 mt-5 text-center">
@@ -54,7 +64,8 @@ if (!isset($_SESSION['is_adminlogin'])) {
             echo '<th scope="col">Req ID</th>';
             echo '<th scope="col">Request Name</th>';
             echo '<th scope="col">Name</th>';
-            echo '<th scope="col">Address</th>';
+            echo '<th scope="col">Address1</th>';
+            echo '<th scope="col">Address2</th>';
             echo '<th scope="col">City</th>';
             echo '<th scope="col">Mobile</th>';
             echo '<th scope="col">Technician</th>';
@@ -79,7 +90,7 @@ if (!isset($_SESSION['is_adminlogin'])) {
 
             echo '<tr>';
             echo '<td colspan="9" class="text-center">';
-            echo '<input type="button" class="btn btn-danger" value="Print" onclick="window.print()">';
+            echo '<input type="button" class="btn btn-danger" value="Print" onclick="window.print()"> ';
             echo '</td>';
             echo '</tr>';
 

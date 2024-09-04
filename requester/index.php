@@ -57,45 +57,9 @@
 
        <!-- customer review -->
        
-
-      <div class="jumbotron bg-info">
-  <div class="container">
-    <h2 class="text-center text-white mb-4">Happy Customer</h2>
-    <div class="row justify-content-center">
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-        <div class="card shadow-lg">
-          <div class="card-body text-center">
-            <img src="../images/facebook.png" class="img-fluid w-50 mb-3" style="border-radius: 50%;" alt="avt1">
-            <h4 class="card-title">Lia</h4>
-            <p class="card-text">gacywgygyigcyisGgyusvgyusGygxjhahscuhuhcahsjh</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-        <div class="card shadow-lg">
-          <div class="card-body text-center">
-            <img src="../images/facebook.png" class="img-fluid w-50 mb-3" style="border-radius: 50%;" alt="avt1">
-            <h4 class="card-title">Lia</h4>
-            <p class="card-text">gacywgygyigcyisGgyusvgyusGygxjhahscuhuhcahsjhjbccccccccy</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-        <div class="card shadow-lg">
-          <div class="card-body text-center">
-            <img src="../images/facebook.png" class="img-fluid w-50 mb-3" style="border-radius: 50%;" alt="avt1">
-            <h4 class="card-title">Lia</h4>
-            <p class="card-text">gacywgygyigcyisGgyusvgyusGygxjhahscuhuhcahsjhjbccccccccy</p>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-</div>
+       <?php include('customer.php')
+?>
+ 
 
 <!-- end of customer review -->
 <?php include('contactform.php')

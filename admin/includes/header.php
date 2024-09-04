@@ -30,7 +30,7 @@
 <div class="container-fuildd" style="margin-top:40px";>
     <div class="row">  
         <!-- start row -->
-        <nav class="col-sm-2 bg-light sidebar py-5"><!-- side bar -->
+        <nav class="col-sm-2 bg-light sidebar py-5 d-print-none"><!-- side bar -->
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
 
@@ -42,9 +42,10 @@
 
                      <li class="nav-item">
                     <a class="nav-link 
-                    <?php if(PAGE == 'service'){echo 'active';}?>" href="service.php">
-                        <i class="fas fa-tachometer-alt"></i> dashboard
+                    <?php if(PAGE == 'service'){echo 'active';}?>" href="aservice.php">
+                        <i class="fas fa-tachometer-alt"></i> Edit Service
                      </a></li>
+                     <li class="nav-item">
 
                      <li class="nav-item">
                     <a class="nav-link <?php if(PAGE == 'work'){echo 'active';}?>" href="work.php">
