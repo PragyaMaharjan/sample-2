@@ -42,6 +42,12 @@
 
                      <li class="nav-item">
                     <a class="nav-link 
+                    <?php if(PAGE == 'dashboard'){echo 'active';}?>" href="categories.php">
+                        <i class="fas fa-tachometer-alt"></i> Categories
+                     </a></li>
+
+                     <li class="nav-item">
+                    <a class="nav-link 
                     <?php if(PAGE == 'service'){echo 'active';}?>" href="aservice.php">
                         <i class="fas fa-tachometer-alt"></i> Edit Service
                      </a></li>
